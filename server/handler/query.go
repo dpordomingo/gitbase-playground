@@ -8,6 +8,9 @@ import (
 	"net/http"
 
 	"github.com/src-d/gitbase-playground/server/serializer"
+	"gopkg.in/bblfsh/sdk.v1/uast"
+
+	"github.com/go-sql-driver/mysql"
 )
 
 type queryRequest struct {
@@ -15,13 +18,24 @@ type queryRequest struct {
 	Limit int    `json:"limit"`
 }
 
-// genericVals returns a slice of interface{}, each one a pointer to a NullString
-func genericVals(nColumns int) []interface{} {
-	columnVals := make([]sql.NullString, nColumns)
-	columnValsPtr := make([]interface{}, nColumns)
+// genericVals returns a slice of interface{}, each one a pointer to the proper
+// type for each column
+func genericVals(colTypes []*sql.ColumnType) []interface{} {
+	columnValsPtr := make([]interface{}, len(colTypes))
 
-	for i := range columnVals {
-		columnValsPtr[i] = &columnVals[i]
+	for i, colType := range colTypes {
+		switch colType.DatabaseTypeName() {
+		case "BIT":
+			columnValsPtr[i] = new(sql.NullBool)
+		case "TIMESTAMP":
+			columnValsPtr[i] = new(mysql.NullTime)
+		case "INT":
+			columnValsPtr[i] = new(sql.NullInt64)
+		case "JSON":
+			columnValsPtr[i] = new([]byte)
+		default: // "TEXT" and any others
+			columnValsPtr[i] = new(sql.NullString)
+		}
 	}
 
 	return columnValsPtr
@@ -52,28 +66,69 @@ func Query(db *sql.DB) RequestProcessFunc {
 		}
 		defer rows.Close()
 
-		columnNames, _ := rows.Columns()
-		nColumns := len(columnNames)
-		columnValsPtr := genericVals(nColumns)
+		columnNames, err := rows.Columns()
+		if err != nil {
+			return nil, err
+		}
 
-		tableData := make([]map[string]string, 0)
+		colTypes, err := rows.ColumnTypes()
+		if err != nil {
+			return nil, err
+		}
+		columnValsPtr := genericVals(colTypes)
+
+		tableData := make([]map[string]interface{}, 0)
 
 		for rows.Next() {
 			if err := rows.Scan(columnValsPtr...); err != nil {
 				return nil, err
 			}
 
-			colData := make(map[string]string)
+			colData := make(map[string]interface{})
 
 			for i, val := range columnValsPtr {
-				var st string
-				sqlSt, _ := val.(*sql.NullString)
+				colData[columnNames[i]] = nil
 
-				if sqlSt.Valid {
-					st = sqlSt.String
+				switch val.(type) {
+				case *sql.NullBool:
+					sqlVal, _ := val.(*sql.NullBool)
+					if sqlVal.Valid {
+						colData[columnNames[i]] = sqlVal.Bool
+					}
+				case *mysql.NullTime:
+					sqlVal, _ := val.(*mysql.NullTime)
+					if sqlVal.Valid {
+						colData[columnNames[i]] = sqlVal.Time
+					}
+				case *sql.NullInt64:
+					sqlVal, _ := val.(*sql.NullInt64)
+					if sqlVal.Valid {
+						colData[columnNames[i]] = sqlVal.Int64
+					}
+				case *sql.NullString:
+					sqlVal, _ := val.(*sql.NullString)
+					if sqlVal.Valid {
+						colData[columnNames[i]] = sqlVal.String
+					}
+				case *[]byte:
+					// TODO (carlosms) this may not be an array always
+					var protobufs [][]byte
+					if err := json.Unmarshal(*val.(*[]byte), &protobufs); err != nil {
+						return nil, err
+					}
+
+					nodes := make([]*uast.Node, len(protobufs))
+
+					for i, v := range protobufs {
+						node := uast.NewNode()
+						if err = node.Unmarshal(v); err != nil {
+							return nil, err
+						}
+						nodes[i] = node
+					}
+
+					colData[columnNames[i]] = nodes
 				}
-
-				colData[columnNames[i]] = st
 			}
 
 			tableData = append(tableData, colData)

@@ -81,6 +81,6 @@ type queryMetaResponse struct {
 }
 
 // NewQueryResponse returns a Response with table headers and row contents
-func NewQueryResponse(rows []map[string]string, columnNames []string) *Response {
+func NewQueryResponse(rows []map[string]interface{}, columnNames []string) *Response {
 	return newResponse(rows, queryMetaResponse{columnNames})
 }
