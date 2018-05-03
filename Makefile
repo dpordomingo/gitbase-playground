@@ -7,11 +7,15 @@ DEPENDENCIES := \
 	github.com/golang/lint/golint
 GO_LINTABLE_PACKAGES := $(shell go list ./... | grep -v '/vendor/')
 
+assets := ./server/assets/asset.go
+assets_back := $(assets).bak
+
 # Tools
 GODEP := dep
 GOLINT := golint
 GOVET := go vet
 BINDATA := go-bindata
+DIFF := diff
 
 all:
 
@@ -24,21 +28,21 @@ $(MAKEFILE):
 	@git clone --quiet --depth 1 -b $(CI_BRANCH) $(CI_REPOSITORY) $(CI_PATH);
 -include $(MAKEFILE)
 
-exit:
-	exit 0;
+# Makefile.main::dependencies -> Makefile.main::$(DEPENDENCIES) -> this::dependencies
+dependencies: | front-dependencies back-dependencies exit
 
-# Makefile.main::dependencies -> Makefile.main::$(DEPENDENCIES)
-dependencies: front-dependencies back-dependencies exit
-
-# Makefile.main::build -> Makefile.main::$(COMMANDS)
-build: front-build back-build
-
-# Makefile.main::test
+# Makefile.main::test -> this::test
 test: front-test
 
-coverage: test-coverage codecov # from Makefile.main
+# this::build -> Makefile.main::build -> Makefile.main::$(COMMANDS)
+build: prepare-build
+	@echo
 
-lint: back-lint front-lint
+prepare-build: | front-build back-build
+
+coverage: | test-coverage codecov
+
+lint: | back-lint front-lint
 
 
 # Backend
@@ -51,7 +55,7 @@ back-build: back-bindata
 back-bindata:
 	$(BINDATA) \
 		-pkg assets \
-		-o ./server/assets/asset.go \
+		-o $(assets) \
 		build/public/*
 
 back-lint: $(GO_LINTABLE_PACKAGES)
@@ -60,7 +64,10 @@ $(GO_LINTABLE_PACKAGES):
 	$(GOVET) $@
 
 back-start:
-	go run cli/server/server.go
+	go run cmd/server/main.go
+
+back-ensure-assets-proxy:
+	$(DIFF) $(assets) $(assets_back) || exit 1
 
 
 # Frontend
@@ -82,22 +89,29 @@ front-lint: front-dependencies-development
 	echo 'SKIP. no frontend linters to run'
 	#$(YARN) lint
 
-front-build: front-dependencies
-	echo 'SKIP. no buildable frontend'
+front-build:
+	mkdir -p build/public
+	cp public/index.html build/public/index.html
+	cp public/secondary.html build/public/secondary.html
 	#$(YARN) build
 
 front-start: front-dependencies
 	echo 'SKIP. no runnable frontend'
 	#$(YARN) start
 
+front-fix-lint-errors:
+	echo 'SKIP. no fixable code'
+	#$(YARN) fix-lint-errors
 
 # ALL
 
-prepare-build: | front-build back-build bindata
+exit:
+	exit 0;
 
-validate-commit: | back-dependencies no-changes-in-commit
+validate-commit: | back-dependencies back-ensure-assets-proxy front-fix-lint-errors no-changes-in-commit
 
 build-app: | prepare-build packages
 
 ## Compiles the assets, and serve the tool through its API
 serve: | front-build back-build gorun
+

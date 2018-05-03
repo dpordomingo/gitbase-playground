@@ -32,8 +32,8 @@ jobs:
     - stage: validate and build
       script:
         - make test
-        - make coverage
         - make lint
+        - make coverage
         - make validate-commit
     - script:
         - make packages
