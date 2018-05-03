@@ -1,21 +1,21 @@
 language: go
 
-services:
-  - docker
+#services:
+  #- docker
 
 go:
   - "1.9.x"
-  - "1.10.x"
-  - tip
+  #- "1.10.x"
+  #- tip
 
 #cache:
 #  directories:
 #  - node_modules
 
-matrix:
-  fast_finish: true
-  allow_failures:
-    - go: tip
+#matrix:
+  #fast_finish: true
+  #allow_failures:
+    #- go: tip
 
 before_install:
   - . $HOME/.nvm/nvm.sh
@@ -23,10 +23,7 @@ before_install:
   - nvm use 8
   - npm install -g yarn
 
-before_script:
-  - make dependencies
-
-before_deploy:
+install:
   - make dependencies
 
 jobs:

@@ -41,7 +41,7 @@ lint: back-lint front-lint
 
 # Backend
 
-back-dependencies:
+back-dependencies: $(DEPENDENCIES)
 	$(GODEP) ensure
 
 back-build: back-bindata
@@ -65,22 +65,28 @@ back-start:
 yarn_production ?= true
 
 front-dependencies-development:
-	$(MAKE) front-dependencies yarn_production=false
+	echo 'SKIP. no frontend dependencies to install'
+	#$(MAKE) front-dependencies yarn_production=false
 
 front-dependencies:
-	$(YARN) install --production=$(yarn_production)
+	echo 'SKIP. no frontend dependencies to install'
+	#$(YARN) install --production=$(yarn_production)
 
 front-test: front-dependencies-development
-	$(YARN) test
+	echo 'SKIP. no frontend tests to run'
+	#$(YARN) test
 
 front-lint: front-dependencies-development
-	$(YARN) lint
+	echo 'SKIP. no frontend linters to run'
+	#$(YARN) lint
 
 front-build: front-dependencies
-	$(YARN) build
+	echo 'SKIP. no buildable frontend'
+	#$(YARN) build
 
 front-start: front-dependencies
-	$(YARN) start
+	echo 'SKIP. no runnable frontend'
+	#$(YARN) start
 
 
 # ALL
