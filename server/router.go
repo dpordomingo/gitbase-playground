@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"net/http"
 
-	"github.com/src-d/gitbase-playground/server/handler"
+	"github.com/dpordomingo/gitbase-playground/server/handler"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"

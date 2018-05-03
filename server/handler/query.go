@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/src-d/gitbase-playground/server/serializer"
+	"github.com/dpordomingo/gitbase-playground/server/serializer"
 	"gopkg.in/bblfsh/sdk.v1/uast"
 
 	"github.com/go-sql-driver/mysql"
