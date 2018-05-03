@@ -24,24 +24,26 @@ $(MAKEFILE):
 	@git clone --quiet --depth 1 -b $(CI_BRANCH) $(CI_REPOSITORY) $(CI_PATH);
 -include $(MAKEFILE)
 
-# Makefile.main::dependencies -> Makefile.main::$(DEPENDENCIES)
-dependencies: front-dependencies back-dependencies
+exit:
 	exit 0;
+
+# Makefile.main::dependencies -> Makefile.main::$(DEPENDENCIES)
+dependencies: front-dependencies back-dependencies exit
 
 # Makefile.main::build -> Makefile.main::$(COMMANDS)
 build: front-build back-build
 
 # Makefile.main::test
-test: back-test front-test
+test: front-test
 
-converage: test-coverage codecov # from Makefile.main
+coverage: test-coverage codecov # from Makefile.main
 
 lint: back-lint front-lint
 
 
 # Backend
 
-back-dependencies: $(DEPENDENCIES)
+back-dependencies:
 	$(GODEP) ensure
 
 back-build: back-bindata
