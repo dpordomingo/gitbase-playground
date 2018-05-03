@@ -1,6 +1,8 @@
 # Package configuration
 PROJECT := gitbase-playground
 COMMANDS := cmd/server
+DOCKER_PUSH_LATEST := true
+DOCKER_ORG := dpordomingo
 DEPENDENCIES := \
 	github.com/golang/dep/cmd/dep \
 	github.com/jteeuwen/go-bindata \
@@ -16,6 +18,7 @@ GOLINT := golint
 GOVET := go vet
 BINDATA := go-bindata
 DIFF := diff
+GITADD := git add -A
 
 all:
 
@@ -108,7 +111,15 @@ front-fix-lint-errors:
 exit:
 	exit 0;
 
-validate-commit: | back-dependencies back-ensure-assets-proxy front-fix-lint-errors no-changes-in-commit
+add-untracked:
+	$(GITADD)
+
+validate-commit: | \
+	back-dependencies \
+	back-ensure-assets-proxy \
+	front-fix-lint-errors \
+	add-untracked \
+	no-changes-in-commit
 
 build-app: | prepare-build packages
 

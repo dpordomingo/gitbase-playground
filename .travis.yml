@@ -40,6 +40,7 @@ jobs:
       if: tag is blank
     # release to github
     - stage: release to github
+      if: tag is present
       script:
         - make packages
       deploy:
@@ -49,12 +50,14 @@ jobs:
         file: build/*.tar.gz
         skip_cleanup: true
         on:
-          tags: true
           go: 1.9
-      # after_deploy: TODO (dpordomingo): test github release
+    # echo
+    - stage: echo
+      script:
+        - echo "HOLA"
     # push to dockerhub
     - stage: push to dockerhub
+      if: tag is present
       script:
         - make build
-        - make docker-push-latest
-      # after_deploy: TODO (dpordomingo): test docker image
+        - make docker-push
