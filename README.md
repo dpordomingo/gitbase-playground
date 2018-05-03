@@ -44,7 +44,7 @@ $ gitbase-playground
 
 # Contribute
 
-[Contributions](https://github.com/src-d/gitbase-playground/issues) are more than welcome, if you are interested please take a look to our [Contributing Guidelines](docs/CONTRIBUTING.md). You have more information on how to run it locally for [development purposes here](docs/CONTRIBUTING.md#Development).
+[Contributions](https://github.com/src-d/gitbase-playground/issues) are more than welcome, if you are interested please take a look to our [Contributing Guidelines](docs/CONTRIBUTING.md). You have more information on how to run it locally for [development purposes here](docs/CONTRIBUTING.md#development).
 
 
 # Code of Conduct
