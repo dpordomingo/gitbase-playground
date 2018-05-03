@@ -1,0 +1,63 @@
+language: go
+
+services:
+  - docker
+
+go:
+  - "1.9.x"
+  - "1.10.x"
+  - tip
+
+#cache:
+#  directories:
+#  - node_modules
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - go: tip
+
+before_install:
+  - . $HOME/.nvm/nvm.sh
+  - nvm install 8
+  - nvm use 8
+  - npm install -g yarn
+
+before_script:
+  - make dependencies
+
+before_deploy:
+  - make dependencies
+
+jobs:
+  include:
+    # validate and build
+    - stage: validate and build
+      script:
+        - make test
+        - make coverage
+        - make lint
+        - make validate-commit
+    - script:
+        - make packages
+      if: tag is blank
+    # release to github
+    - stage: release to github
+      script:
+        - make packages
+      deploy:
+        provider: releases
+        api_key: $GITHUB_TOKEN
+        file_glob: true
+        file: build/*.tar.gz
+        skip_cleanup: true
+        on:
+          tags: true
+          go: 1.9
+      # after_deploy: TODO (dpordomingo): test github release
+    # push to dockerhub
+    - stage: push to dockerhub
+      script:
+        - make build
+        - make docker-push-latest
+      # after_deploy: TODO (dpordomingo): test docker image
