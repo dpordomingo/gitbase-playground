@@ -1,6 +1,6 @@
 # Package configuration
 PROJECT := gitbase-playground
-COMMANDS := cmd/server
+COMMANDS := cmd/gitbase-playground
 DOCKER_PUSH_LATEST := true
 DOCKER_ORG := dpordomingo
 DEPENDENCIES := \
@@ -67,7 +67,7 @@ $(GO_LINTABLE_PACKAGES):
 	$(GOVET) $@
 
 back-start:
-	go run cmd/server/main.go
+	go run cmd/gitbase-playground/main.go
 
 back-ensure-assets-proxy:
 	$(DIFF) $(assets) $(assets_back) || exit 1
