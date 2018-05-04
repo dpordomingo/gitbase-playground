@@ -1,10 +1,10 @@
 package server
 
 import (
-	"database/sql"
 	"net/http"
 
 	"github.com/dpordomingo/gitbase-playground/server/handler"
+	"github.com/dpordomingo/gitbase-playground/server/service"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -18,7 +18,7 @@ func Router(
 	logger *logrus.Logger,
 	static *handler.Static,
 	version string,
-	db *sql.DB,
+	db service.SQLDB,
 ) http.Handler {
 
 	// cors options
