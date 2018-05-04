@@ -29,7 +29,7 @@ const version = "test-version"
 
 func (s *RouterTestSuite) SetupSuite() {
 	logger := service.NewLogger("dev")
-	staticHandler := handler.NewStatic("/tmp", "localhost:0")
+	staticHandler := &handler.Static{}
 	s.db = &mockDB{}
 	s.router = server.Router(
 		logger,

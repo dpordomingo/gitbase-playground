@@ -30,26 +30,16 @@ type ClientTestSuite struct {
 }
 
 func (c *ClientTestSuite) AssertResponseBody(resp *http.Response, expectedContent string, msg string) {
-	if resp == nil {
-		c.FailNow("the response body should not be nil")
-		return
-	}
+	c.Require().NotNil(resp, "the response body should not be nil")
 	respBody, err := ioutil.ReadAll(resp.Body)
-	c.NoError(err)
-	if err != nil {
-		c.FailNow("the response body should be readable")
-		return
-	}
+	c.Require().Nil(err, "the response body should be readable")
 
 	defer resp.Body.Close()
 	c.Equal(expectedContent, string(respBody), msg)
 }
 
 func (c *ClientTestSuite) AssertResponseStatus(resp *http.Response, expectedStatus int, msg string) {
-	if resp == nil {
-		c.FailNow("the response body should not be nil")
-		return
-	}
+	c.Require().NotNil(resp, "the response body should not be nil")
 	c.Equal(expectedStatus, resp.StatusCode, fmt.Sprintf("status should be %d; %s", expectedStatus, msg))
 }
 
