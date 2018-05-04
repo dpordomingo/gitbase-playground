@@ -26,6 +26,17 @@ before_install:
 install:
   - make dependencies
 
+stages:
+  - name: validate and build
+    if: >-
+      type = pull_request OR
+      branch IN (master, staging) OR
+      tag IS present
+  - name: release to github
+    if: tag is present
+  - name: push to dockerhub
+    if: tag is present
+
 jobs:
   include:
     # validate and build
@@ -37,10 +48,8 @@ jobs:
         - make validate-commit
     - script:
         - make packages
-      if: tag is blank
     # release to github
     - stage: release to github
-      if: tag is present
       script:
         - make packages
       deploy:
@@ -51,13 +60,8 @@ jobs:
         skip_cleanup: true
         on:
           go: 1.9
-    # echo
-    - stage: echo
-      script:
-        - echo "HOLA"
     # push to dockerhub
     - stage: push to dockerhub
-      if: tag is present
       script:
         - make build
         - make docker-push
