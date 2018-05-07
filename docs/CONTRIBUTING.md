@@ -75,3 +75,14 @@ go run cli/gitbase/main.go server -v --git=repos
 ```
 
 This will start a server locally, which you can access on [http://localhost:8080](http://localhost:8080)
+
+
+## Integration tests
+
+It will test that `gitbase` and `bblfshd` are running and available for the playground.
+
+It is needed to serve under `gitbase` a copy of the `https://github.com/src-d/gitbase-playground` repository
+
+```bash
+$ make back-test-integration
+```
