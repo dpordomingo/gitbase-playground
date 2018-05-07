@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/src-d/gitbase-playground/server/assets"
+	"github.com/dpordomingo/gitbase-playground/server/assets"
 )
 
 // Static contains handlers to serve static using go-bindata

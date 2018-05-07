@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/src-d/gitbase-playground.svg)](https://travis-ci.org/src-d/gitbase-playground)
-[![codecov.io](https://codecov.io/github/src-d/gitbase-playground/coverage.svg)](https://codecov.io/github/src-d/go-git)
+[![Build Status](https://travis-ci.org/dpordomingo/gitbase-playground.svg)](https://travis-ci.org/dpordomingo/gitbase-playground)
+[![codecov.io](https://codecov.io/github/dpordomingo/gitbase-playground/coverage.svg)](https://codecov.io/github/src-d/go-git)
 ![unstable](https://svg-badge.appspot.com/badge/stability/unstable?a)
 
 # Gitbase Playground
@@ -33,7 +33,7 @@ $ docker run --name bblfsh srcd/gitbase-playground -p 8080:8080
 
 ### Run binary
 
-Download a binnary from our [releases section](https://github.com/src-d/gitbase-playground/releases), and run it:
+Download a binnary from our [releases section](https://github.com/dpordomingo/gitbase-playground/releases), and run it:
 
 ```bash
 $ /download/path/gitbase-playground
@@ -42,7 +42,7 @@ $ /download/path/gitbase-playground
 
 # Contribute
 
-[Contributions](https://github.com/src-d/gitbase-playground/issues) are more than welcome, if you are interested please take a look to our [Contributing Guidelines](docs/CONTRIBUTING.md). You have more information on how to run it locally for [development purposes here](docs/CONTRIBUTING.md#development).
+[Contributions](https://github.com/dpordomingo/gitbase-playground/issues) are more than welcome, if you are interested please take a look to our [Contributing Guidelines](docs/CONTRIBUTING.md). You have more information on how to run it locally for [development purposes here](docs/CONTRIBUTING.md#development).
 
 
 # Code of Conduct

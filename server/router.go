@@ -3,8 +3,8 @@ package server
 import (
 	"net/http"
 
-	"github.com/src-d/gitbase-playground/server/handler"
-	"github.com/src-d/gitbase-playground/server/service"
+	"github.com/dpordomingo/gitbase-playground/server/handler"
+	"github.com/dpordomingo/gitbase-playground/server/service"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"

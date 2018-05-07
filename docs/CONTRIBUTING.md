@@ -49,7 +49,7 @@ The project must be under $GOPATH, as required by the Go tooling.
 You should be able to navigate into the source code by running:
 
 ```
-cd $GOPATH/src/github.com/src-d/gitbase-playground
+cd $GOPATH/src/github.com/dpordomingo/gitbase-playground
 ```
 
 You need also [Yarn v1.x.x installed](https://yarnpkg.com/en/docs/install)
@@ -64,13 +64,13 @@ yarn --version; # prints your Yarn version
 You need to satisfy all [project requirements](#requirements), and then run:
 
 ```bash
-$ go get -d -u github.com/src-d/gitbase-playground/...
-$ cd $GOPATH/github.com/src-d/gitbase-playground
+$ go get -d -u github.com/dpordomingo/gitbase-playground/...
+$ cd $GOPATH/github.com/dpordomingo/gitbase-playground
 $ make dependencies
 $ make serve
 
 
-git clone https://github.com/src-d/gitbase-playground.git repos/gitbase-playground
+git clone https://github.com/dpordomingo/gitbase-playground.git repos/gitbase-playground
 go run cli/gitbase/main.go server -v --git=repos
 ```
 

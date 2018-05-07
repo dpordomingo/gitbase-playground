@@ -7,9 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/src-d/gitbase-playground/server"
-	"github.com/src-d/gitbase-playground/server/handler"
-	"github.com/src-d/gitbase-playground/server/service"
+	"github.com/dpordomingo/gitbase-playground/server"
+	"github.com/dpordomingo/gitbase-playground/server/handler"
+	"github.com/dpordomingo/gitbase-playground/server/service"
 
 	"github.com/stretchr/testify/suite"
 )

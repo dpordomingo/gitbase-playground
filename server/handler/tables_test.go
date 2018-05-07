@@ -5,9 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/dpordomingo/gitbase-playground/server/handler"
+	"github.com/dpordomingo/gitbase-playground/server/service"
 	"github.com/sirupsen/logrus"
-	"github.com/src-d/gitbase-playground/server/handler"
-	"github.com/src-d/gitbase-playground/server/service"
 
 	"github.com/pressly/lg"
 	"github.com/stretchr/testify/suite"

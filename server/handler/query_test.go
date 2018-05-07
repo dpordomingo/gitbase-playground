@@ -9,9 +9,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/src-d/gitbase-playground/server/handler"
-	"github.com/src-d/gitbase-playground/server/serializer"
-	"github.com/src-d/gitbase-playground/server/service"
+	"github.com/dpordomingo/gitbase-playground/server/handler"
+	"github.com/dpordomingo/gitbase-playground/server/serializer"
+	"github.com/dpordomingo/gitbase-playground/server/service"
 
 	"github.com/kelseyhightower/envconfig"
 	"github.com/pressly/lg"
@@ -158,7 +158,7 @@ func (suite *QuerySuite) TestBoolFunctions() {
 }
 
 // This test requires that gitbase can reach bblfshd and that it's serving the
-// repository https://github.com/src-d/gitbase-playground
+// repository https://github.com/dpordomingo/gitbase-playground
 func (suite *QuerySuite) TestUastFunctions() {
 	req, _ := http.NewRequest("POST", "/query", strings.NewReader(
 		`{ "query": "SELECT hash, content, uast(content, 'go') as uast FROM blobs WHERE hash='fd30cea52792da5ece9156eea4022bdd87565633'" }`))
