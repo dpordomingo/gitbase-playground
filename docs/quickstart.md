@@ -50,7 +50,7 @@ Once bblfsh and gitbase are running and accessible, you can serve the playground
 ```bash
 $ GITBASE_CONTAINER=gitbase;
 $ PLAYGROUND_CONTAINER=gitbasePlayground;
-$ PLAYGROUND_IMAGE=src-d/gitbase-playground:latest;
+$ PLAYGROUND_IMAGE=dpordomingo/gitbase-playground:latest;
 $ docker run -d
     --publish 8080:8080
     --link ${GITBASE_CONTAINER}

@@ -33,7 +33,7 @@ $ docker run -d
     --env GITBASEPG_ENV=dev
     --env GITBASEPG_DB_CONNECTION="gitbase@tcp(${GITBASE_CONTAINER}:3306)/none?maxAllowedPacket=4194304"
     --name gitbasePlayground
-    src-d/gitbase-playground:latest;
+    dpordomingo/gitbase-playground:latest;
 ```
 
 
