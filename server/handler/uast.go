@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/src-d/gitbase-playground/server/serializer"
+	"github.com/dpordomingo/gitbase-playground/server/serializer"
 )
 
 // Parse : placeholder method

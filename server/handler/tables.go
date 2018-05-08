@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/src-d/gitbase-playground/server/serializer"
-	"github.com/src-d/gitbase-playground/server/service"
+	"github.com/dpordomingo/gitbase-playground/server/serializer"
+	"github.com/dpordomingo/gitbase-playground/server/service"
 )
 
 // Tables returns a function that calls /query with the SQL "SHOW TABLES"

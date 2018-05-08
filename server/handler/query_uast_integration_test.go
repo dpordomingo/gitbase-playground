@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/src-d/gitbase-playground/server/handler"
+	"github.com/dpordomingo/gitbase-playground/server/handler"
 	"github.com/stretchr/testify/suite"
 )
 
