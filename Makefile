@@ -1,7 +1,7 @@
 # Package configuration
 PROJECT := gitbase-playground
 COMMANDS := cmd/gitbase-playground
-DOCKER_ORG := src-d
+DOCKER_ORG := dpordomingo
 DEPENDENCIES := \
 	github.com/golang/dep/cmd/dep \
 	github.com/jteeuwen/go-bindata \
