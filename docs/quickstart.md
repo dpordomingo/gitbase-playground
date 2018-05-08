@@ -32,7 +32,7 @@ Install and run [gitbase](https://github.com/src-d/gitbase):
 $ REPOS_PATH=~/gitbase/repos
 $ GITBASE_CONTAINER=gitbase;
 $ BBLFSHD_CONTAINER=bblfsh;
-$ GITBASE_IMAGE=src-d/gitbase:latest;
+$ GITBASE_IMAGE=dpordomingo/gitbase:latest;
 $ docker run
     --publish 3306:3306
     --link ${BBLFSHD_CONTAINER}
